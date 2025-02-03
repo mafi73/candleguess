@@ -1,0 +1,12 @@
+<h2>ثبت قیمت و رنگ واقعی کندل</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label for="real_price">قیمت واقعی:</label>
+    <input type="text" name="real_price" required><br>
+    <label for="real_color">رنگ واقعی:</label>
+    <select name="real_color" required>
+        <option value="red">قرمز</option>
+        <option value="green">سبز</option>
+    </select><br>
+    <button type="submit">ثبت نتیجه</button>
+</form>

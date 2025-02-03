@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>حدس قیمت کندل</title>
+</head>
+<body>
+    <h1>حدس قیمت کندل (یک دقیقه‌ای)</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ارسال حدس</button>
+    </form>
+</body>
+</html>

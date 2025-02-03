@@ -1,0 +1,7 @@
+<h2>ثبت قیمت واقعی کندل</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label for="actual_price">قیمت واقعی:</label>
+    <input type="text" name="actual_price" required>
+    <button type="submit">ثبت نتیجه</button>
+</form>

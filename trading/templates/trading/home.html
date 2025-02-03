@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>صفحه اصلی</title>
+</head>
+<body>
+    <h1>به سایت خوش آمدید!</h1>
+    <p>این صفحه پس از ورود به عنوان صفحه اصلی نمایش داده می‌شود.</p>
+    <p><a href="{% url 'logout' %}">خروج</a></p>
+    
+    <!-- می‌توانید لینک‌هایی به سایر بخش‌های سایت نیز اضافه کنید -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'guess_price' %}">حدس قیمت کندل</a></li>
+            <li><a href="{% url 'guess_color' %}">حدس رنگ کندل</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

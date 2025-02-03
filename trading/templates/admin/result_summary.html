@@ -1,0 +1,21 @@
+<h2>نتیجه اعتبارسنجی</h2>
+<p>قیمت واقعی: {{ real_price }}</p>
+<p>رنگ واقعی: {{ real_color }}</p>
+
+<h3>برندگان حدس قیمت:</h3>
+<ul>
+    {% for guess in correct_price_guesses %}
+        <li>{{ guess.user.username }} با حدس {{ guess.guessed_value }}</li>
+    {% empty %}
+        <li>هیچ حدس درستی ثبت نشده است.</li>
+    {% endfor %}
+</ul>
+
+<h3>برندگان حدس رنگ:</h3>
+<ul>
+    {% for guess in correct_color_guesses %}
+        <li>{{ guess.user.username }} با حدس {{ guess.guessed_color }}</li>
+    {% empty %}
+        <li>هیچ حدس درستی ثبت نشده است.</li>
+    {% endfor %}
+</ul>
