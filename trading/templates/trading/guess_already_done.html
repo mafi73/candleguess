@@ -6,6 +6,33 @@
 </head>
 <body>
     <h1>{{ message }}</h1>
-    <a href="/">بازگشت به صفحه اصلی</a>
+    <a href="/home">بازگشت به صفحه اصلی</a>
 </body>
 </html>
+<div>
+    <p>{{ message }}</p>
+    <p>زمان باقی‌مانده: <span id="countdown-timer"></span></p>
+</div>
+
+<script>
+    // مقدار باقی‌مانده ثانیه از سرور
+    let remainingSeconds = {{ remaining_seconds|default:0 }};
+    
+    function updateCountdown() {
+        if (remainingSeconds > 0) {
+            const hours = Math.floor(remainingSeconds / 3600);
+            const minutes = Math.floor((remainingSeconds % 3600) / 60);
+            const seconds = remainingSeconds % 60;
+
+            document.getElementById('countdown-timer').textContent =
+                `${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+            remainingSeconds--;
+        } else {
+            document.getElementById('countdown-timer').textContent = "زمان حدس جدید فرا رسیده است!";
+            clearInterval(timerInterval);
+        }
+    }
+
+    updateCountdown(); // نمایش اولیه
+    const timerInterval = setInterval(updateCountdown, 1000);
+</script>
