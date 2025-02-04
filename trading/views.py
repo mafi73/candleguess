@@ -7,7 +7,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
-from datetime import date
+from datetime import date , datetime , timedelta
+from django.utils.timezone import make_aware
 
 
 # ویوی ثبت‌نام
@@ -49,11 +50,44 @@ def home(request):
 
 
 # حدس قیمت
+# @login_required
+# def guess_price_view(request):
+#     today = timezone.now().date()
+#     if CandlePriceGuess.objects.filter(user=request.user, guess_date=today).exists():   
+#         now = timezone.now()
+#         next_guess_time = datetime.combine(today + timedelta(days=1), datetime.min.time())
+#         remaining_seconds = int((next_guess_time - now).total_seconds())
+#         return render(request, 'trading/guess_already_done.html', {
+#             'message': 'شما امروز قبلاً حدس قیمت زده‌اید.',
+#             'remaining_seconds': remaining_seconds
+#             })
+    
+#     if request.method == 'POST':
+#         form = CandlePriceGuessForm(request.POST)
+#         if form.is_valid():
+#             guess = form.save(commit=False)
+#             guess.user = request.user
+#             guess.guess_date = today
+#             guess.guess_time = timezone.localtime().time()
+#             guess.save()
+#             return redirect('guess_success')
+#     else:
+#         form = CandlePriceGuessForm()
+    
+#     return render(request, 'trading/guess_price_form.html', {'form': form})
+
 @login_required
 def guess_price_view(request):
     today = timezone.now().date()
     if CandlePriceGuess.objects.filter(user=request.user, guess_date=today).exists():
-        return render(request, 'trading/guess_already_done.html', {'message': 'شما امروز قبلاً حدس قیمت زده‌اید.'})
+        # محاسبه زمان باقی‌مانده تا فردا
+        now = timezone.now()
+        next_guess_time = make_aware(datetime.combine(today + timedelta(days=1), datetime.min.time()))
+        remaining_seconds = int((next_guess_time - now).total_seconds())
+        return render(request, 'trading/guess_already_done.html', {
+            'message': 'شما امروز قبلاً حدس قیمت زده‌اید.',
+            'remaining_seconds': remaining_seconds
+        })
     
     if request.method == 'POST':
         form = CandlePriceGuessForm(request.POST)
@@ -69,13 +103,19 @@ def guess_price_view(request):
     
     return render(request, 'trading/guess_price_form.html', {'form': form})
 
-
 # حدس رنگ
 @login_required
 def guess_color_view(request):
     today = timezone.now().date()
     if CandleColorGuess.objects.filter(user=request.user, guess_date=today).exists():
-        return render(request, 'trading/guess_already_done.html', {'message': 'شما امروز قبلاً حدس رنگ زده‌اید.'})
+        now = timezone.now()
+        next_guess_time = make_aware(datetime.combine(today + timedelta(days=1), datetime.min.time()))
+        remaining_seconds = int((next_guess_time - now).total_seconds())
+
+        return render(request, 'trading/guess_already_done.html', {
+            'message': 'شما امروز قبلاً حدس رنگ زده‌اید.',
+            'remaining_seconds': remaining_seconds
+            })
     
     if request.method == 'POST':
         form = CandleColorGuessForm(request.POST)
